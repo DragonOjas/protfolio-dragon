@@ -1,336 +1,922 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ojas | Young AI & Robotics Creator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        body { font-family: 'Poppins', sans-serif; }
-        
-        .hero-bg {
-            background: linear-gradient(135deg, #ff1f1f 0%, #ff6600 100%);
-            overflow: hidden;
-        }
-        
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.3) 0%, transparent 50%);
-            animation: glow 8s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow { from { opacity: 0.6; } to { opacity: 0.9; } }
-        
-        .nav-link:hover { color: #ff6600; border-bottom: 3px solid #ff6600; }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px; left: 0;
-            width: 55px; height: 4px;
-            background: linear-gradient(to right, #ff1f1f, #ff6600);
-            border-radius: 9999px;
-        }
-        
-        .card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 25px 40px -10px rgba(255, 102, 0, 0.3);
-        }
-        
-        .skill-pill:hover {
-            transform: scale(1.12) rotate(3deg);
-            background: linear-gradient(90deg, #ff6600, #ff1f1f);
-            color: white;
-        }
-        
-        .hero-text { animation: textPop 1.2s ease forwards; }
-        @keyframes textPop { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-        
-        .floating-robot { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — Young Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@300;400;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & ROOT ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#06060a;
+  --paper:#f0ede8;
+  --mid:#888;
+  --dim:rgba(240,237,232,.07);
+  --border:rgba(240,237,232,.1);
+  --glow:rgba(240,237,232,.18);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:'Syne',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ─── CUSTOM CURSOR ─────────────────────────────────── */
+#cur{
+  position:fixed;width:10px;height:10px;
+  background:var(--paper);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .2s;
+  mix-blend-mode:difference;
+}
+#cur-ring{
+  position:fixed;width:38px;height:38px;
+  border:1px solid rgba(240,237,232,.5);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .14s ease,width .25s,height .25s,border-color .25s;
+}
+body:hover #cur{opacity:1}
+
+/* ─── 3D CANVAS ─────────────────────────────────────── */
+#canvas3d{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;pointer-events:none;
+  opacity:.45;
+}
+
+/* ─── NOISE OVERLAY ─────────────────────────────────── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.035;
+}
+
+/* ─── NAV ───────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 64px;
+  backdrop-filter:blur(20px) saturate(0);
+  border-bottom:1px solid var(--border);
+  background:rgba(6,6,10,.5);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;letter-spacing:4px;
+  color:var(--paper);
+  text-decoration:none;
+}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--mid);text-decoration:none;
+  transition:color .25s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-5px;left:0;right:0;
+  height:1px;background:var(--paper);
+  transform:scaleX(0);transform-origin:left;transition:transform .25s;
+}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+/* ─── SECTIONS SHARED ───────────────────────────────── */
+section{position:relative;z-index:10}
+.section-inner{
+  max-width:1100px;margin:0 auto;
+  padding:120px 60px;
+}
+.section-label{
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--mid);margin-bottom:16px;
+  display:flex;align-items:center;gap:14px;
+}
+.section-label::before{
+  content:'';display:inline-block;
+  width:36px;height:1px;background:var(--mid);
+}
+
+/* ─── HERO ──────────────────────────────────────────── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:0 64px;
+}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;
+  font-size:11px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--mid);margin-bottom:28px;
+  opacity:0;animation:fadeUp .8s .3s forwards;
+}
+h1.headline{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(80px,13vw,180px);line-height:.88;
+  letter-spacing:2px;color:var(--paper);
+  opacity:0;animation:fadeUp .9s .5s forwards;
+}
+h1.headline span.stroke{
+  -webkit-text-stroke:1px var(--paper);
+  color:transparent;
+}
+.hero-sub{
+  max-width:520px;margin-top:36px;
+  font-size:16px;line-height:1.75;
+  color:rgba(240,237,232,.5);font-weight:300;
+  opacity:0;animation:fadeUp .8s .75s forwards;
+}
+.hero-cta{
+  margin-top:52px;display:flex;gap:20px;align-items:center;
+  opacity:0;animation:fadeUp .8s .95s forwards;
+}
+.btn{
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  padding:16px 36px;border:1px solid var(--paper);
+  color:var(--paper);text-decoration:none;
+  background:transparent;cursor:none;
+  transition:background .25s,color .25s;
+  display:inline-block;
+}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.ghost{border-color:var(--border);color:var(--mid)}
+.btn.ghost:hover{border-color:var(--paper);color:var(--paper);background:transparent}
+.hero-scroll{
+  position:absolute;bottom:48px;left:64px;
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--mid);
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:fadeUp .8s 1.3s forwards;
+  z-index:10;
+}
+.hero-scroll::after{
+  content:'';display:block;width:48px;height:1px;background:var(--mid);
+  animation:scrollLine 2s 2s ease-in-out infinite;
+}
+@keyframes scrollLine{0%,100%{width:24px;opacity:.4}50%{width:60px;opacity:1}}
+
+/* ─── ABOUT ─────────────────────────────────────────── */
+#about{border-top:1px solid var(--border)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.about-visual{
+  position:relative;height:420px;
+  border:1px solid var(--border);overflow:hidden;
+}
+.about-visual-inner{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.about-avatar-ring{
+  width:220px;height:220px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;animation:spinRing 18s linear infinite;
+}
+.about-avatar-ring::before{
+  content:'';position:absolute;inset:-18px;border-radius:50%;
+  border:1px dashed rgba(240,237,232,.15);
+  animation:spinRing 12s linear infinite reverse;
+}
+.about-avatar-ring::after{
+  content:'CREATOR · CODER · CLASS 9 · ';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
+  white-space:nowrap;color:var(--mid);
+  animation: none;
+}
+.avatar-emoji{font-size:80px;animation:spinRing 18s linear infinite reverse}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.about-tag-grid{
+  position:absolute;bottom:24px;left:24px;right:24px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.tag{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:6px 14px;border:1px solid var(--border);
+  color:var(--mid);
+}
+.about-text h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(42px,5vw,72px);line-height:.95;margin-bottom:28px;
+}
+.about-text p{
+  font-size:15px;line-height:1.85;
+  color:rgba(240,237,232,.55);font-weight:300;margin-bottom:18px;
+}
+.about-text p strong{color:var(--paper);font-weight:700}
+.about-stats{
+  display:flex;gap:40px;margin-top:36px;padding-top:36px;
+  border-top:1px solid var(--border);
+}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;font-size:52px;
+  color:var(--paper);line-height:1;
+}
+.stat-label{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--mid);
+  margin-top:4px;
+}
+
+/* ─── EDUCATION ─────────────────────────────────────── */
+#education{border-top:1px solid var(--border)}
+.edu-timeline{margin-top:60px;position:relative}
+.edu-timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:1px;background:var(--border);
+}
+.edu-item{
+  padding-left:48px;padding-bottom:64px;position:relative;
+  opacity:0;transform:translateY(30px);
+  transition:opacity .7s,transform .7s;
+}
+.edu-item.visible{opacity:1;transform:translateY(0)}
+.edu-dot{
+  position:absolute;left:-5px;top:6px;
+  width:10px;height:10px;background:var(--paper);
+  border-radius:50%;border:2px solid var(--ink);
+  box-shadow:0 0 0 4px rgba(240,237,232,.12);
+}
+.edu-year{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--mid);margin-bottom:10px;
+}
+.edu-title{
+  font-family:'Bebas Neue',sans-serif;font-size:36px;
+  letter-spacing:2px;color:var(--paper);margin-bottom:6px;
+}
+.edu-sub{
+  font-size:14px;color:rgba(240,237,232,.45);font-weight:300;line-height:1.7;
+}
+.edu-badge{
+  display:inline-block;margin-top:14px;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;padding:5px 14px;
+  border:1px solid var(--border);color:var(--mid);
+}
+
+/* ─── SKILLS ─────────────────────────────────────────── */
+#skills{border-top:1px solid var(--border)}
+.skills-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);margin-top:60px;
+}
+.skill-card{
+  background:var(--ink);padding:40px 36px;
+  border:none;
+  transition:background .3s;
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s,transform .6s,background .3s;
+}
+.skill-card.visible{opacity:1;transform:translateY(0)}
+.skill-card:hover{background:var(--dim)}
+.skill-icon{
+  font-size:28px;margin-bottom:20px;display:block;
+}
+.skill-name{
+  font-family:'Bebas Neue',sans-serif;font-size:26px;
+  letter-spacing:2px;margin-bottom:10px;
+}
+.skill-desc{
+  font-size:13px;color:rgba(240,237,232,.45);
+  line-height:1.7;font-weight:300;margin-bottom:20px;
+}
+.skill-bar-track{
+  height:1px;background:var(--border);width:100%;margin-top:auto;
+  position:relative;overflow:hidden;
+}
+.skill-bar-fill{
+  position:absolute;left:0;top:0;bottom:0;
+  background:var(--paper);width:0%;
+  transition:width 1.2s cubic-bezier(.16,1,.3,1);
+}
+.skill-card.visible .skill-bar-fill{width:var(--pct)}
+.skill-lvl{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--mid);margin-top:10px;
+}
+
+/* ─── PROJECTS ──────────────────────────────────────── */
+#projects{border-top:1px solid var(--border)}
+.projects-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:24px;margin-top:60px;
+}
+.project-card{
+  border:1px solid var(--border);padding:40px;
+  position:relative;overflow:hidden;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s,transform .7s,border-color .3s;
+}
+.project-card.visible{opacity:1;transform:translateY(0)}
+.project-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--paper),transparent);
+  transform:scaleX(0);transition:transform .5s;
+}
+.project-card:hover{border-color:rgba(240,237,232,.25)}
+.project-card:hover::before{transform:scaleX(1)}
+.project-num{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:3px;color:var(--mid);margin-bottom:28px;
+}
+.project-title{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3vw,40px);
+  letter-spacing:2px;margin-bottom:14px;color:var(--paper);
+}
+.project-desc{
+  font-size:14px;color:rgba(240,237,232,.45);
+  line-height:1.75;font-weight:300;margin-bottom:28px;
+}
+.project-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.p-tag{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:5px 12px;border:1px solid var(--border);color:var(--mid);
+}
+.project-link{
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--mid);text-decoration:none;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:color .25s;
+}
+.project-link::after{
+  content:'→';transition:transform .25s;
+}
+.project-link:hover{color:var(--paper)}
+.project-link:hover::after{transform:translateX(6px)}
+.project-card.featured{grid-column:span 2}
+
+/* ─── CONTACT / FOOTER ───────────────────────────────── */
+#contact{
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.contact-inner{max-width:700px;margin:0 auto;padding:120px 60px}
+.contact-pre{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:5px;text-transform:uppercase;color:var(--mid);margin-bottom:24px;
+}
+.contact-headline{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,8vw,110px);line-height:.9;margin-bottom:32px;
+}
+.contact-sub{
+  font-size:15px;color:rgba(240,237,232,.45);line-height:1.8;font-weight:300;margin-bottom:48px;
+}
+.contact-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+footer{
+  border-top:1px solid var(--border);
+  padding:32px 64px;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:10;position:relative;
+}
+.footer-copy{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:2px;color:var(--mid);
+}
+.footer-brand{
+  font-family:'Bebas Neue',sans-serif;font-size:20px;
+  letter-spacing:4px;color:var(--paper);
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(32px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--border)}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:860px){
+  nav{padding:20px 28px}
+  .nav-links{gap:24px}
+  #hero{padding:0 28px}
+  .section-inner{padding:80px 28px}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .projects-grid{grid-template-columns:1fr}
+  .project-card.featured{grid-column:span 1}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
+@media(max-width:540px){
+  .nav-links{display:none}
+  .skills-grid{grid-template-columns:1fr}
+  .about-stats{gap:24px}
+}
+</style>
 </head>
-<body class="bg-white text-gray-900">
+<body>
 
-    <!-- NAVBAR -->
-    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-orange-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl">O</div>
-                <h1 class="text-3xl font-bold tracking-tight">Ojas</h1>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-8 text-lg font-medium">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-            </div>
-            
-            <a href="#contact" class="px-7 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-2xl hover:shadow-xl transition-all">
-                Let's Connect
-            </a>
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- 3D CANVAS -->
+<canvas id="canvas3d"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">YC</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Class 9 · Young Creator · Coder</p>
+    <h1 class="headline">
+      BUILDING<br>
+      THE <span class="stroke">FUTURE</span><br>
+      LINE BY<br>
+      LINE.
+    </h1>
+    <p class="hero-sub">
+      I'm a passionate student developer who believes code is the closest thing to
+      a superpower. Currently in Class 9, turning curiosity into creation — one
+      project at a time.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn">View My Work</a>
+      <a href="#contact" class="btn ghost">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">01 — About Me</p>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-visual-inner">
+          <div class="about-avatar-ring">
+            <div class="avatar-emoji">🧑‍💻</div>
+          </div>
         </div>
-    </nav>
-
-    <!-- HERO - Buttons Now Fully Working -->
-    <header class="hero-bg text-white min-h-screen flex items-center relative">
-        <div class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-medium">
-                    <span class="w-3 h-3 bg-white rounded-full animate-ping"></span>
-                    Class 9 • AI & Robotics Creator
-                </div>
-                
-                <h1 class="text-6xl md:text-7xl font-bold leading-none hero-text">
-                    Hi, I'm <span class="shimmer">Ojas</span>
-                </h1>
-                
-                <p class="text-2xl md:text-3xl text-white/90 leading-tight">
-                    A passionate young coder from Lucknow building the future with <span class="font-semibold">AI</span>, <span class="font-semibold">Robotics</span> &amp; <span class="font-semibold">Code</span>.
-                </p>
-                
-               <!-- Updated Buttons - Exactly like your image -->
-            <div class="flex flex-wrap gap-5 pt-8">
-                <!-- Explore My Projects Button -->
-                <a href="#projects" 
-                   class="group px-10 py-5 bg-white text-orange-600 font-semibold rounded-3xl hover:bg-orange-50 transition-all flex items-center gap-3 text-lg shadow-xl">
-                    Explore My Projects 
-                    <span class="group-hover:translate-x-1 transition-transform">→</span>
-                </a>
-                
-                <!-- Say Hello Button -->
-                <a href="#contact" 
-                   class="px-10 py-5 border-2 border-white font-semibold rounded-3xl hover:bg-white hover:text-orange-600 transition-all text-lg">
-                    Say Hello
-                </a>
-            </div>
+        <div class="about-tag-grid">
+          <span class="tag">Self-taught</span>
+          <span class="tag">Problem Solver</span>
+          <span class="tag">Creative Coder</span>
+          <span class="tag">Curious Mind</span>
         </div>
-            
-            <div class="hidden md:flex justify-center relative">
-                <div class="w-80 h-80 bg-white/10 backdrop-blur-3xl rounded-[4rem] flex items-center justify-center border border-white/30 floating-robot">
-                    <div class="text-center">
-                        <div class="text-9xl mb-6">🤖</div>
-                        <div class="text-4xl font-bold tracking-widest">AI + ROBOTICS</div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="about-text">
+        <h2>YOUNG.<br>DRIVEN.<br>DIGITAL.</h2>
+        <p>
+          Hey — I'm a <strong>Class 9 student</strong> with an obsession for building things
+          on the web. What started as curiosity about how websites work turned into a
+          full-blown passion for <strong>coding and creating</strong>.
+        </p>
+        <p>
+          I spend my free time exploring new technologies, building mini-projects,
+          and constantly levelling up. For me, every bug fixed is a puzzle solved,
+          and every feature shipped is a small victory.
+        </p>
+        <p>
+          I believe the best time to start is now — and I'm just getting started.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">9</div>
+            <div class="stat-label">Class</div>
+          </div>
+          <div>
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Curiosity</div>
+          </div>
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Passion</div>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ABOUT -->
-    <section id="about" class="max-w-6xl mx-auto px-6 py-24">
-        <h2 class="section-title text-5xl font-bold mb-12">About Me</h2>
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6 text-lg text-gray-700">
-                <p>I'm Ojas, a Class 9 student at St. Teresa's College, Lucknow. I'm super passionate about Artificial Intelligence, Robotics, and Coding.</p>
-                <p>I enjoy creating real projects like AI chatbots, interactive websites, and experimenting with robots.</p>
-            </div>
-            <div class="bg-gradient-to-br from-orange-50 to-red-50 p-10 rounded-3xl">
-                <h3 class="text-2xl font-semibold mb-6">Quick Info</h3>
-                <ul class="space-y-5 text-lg">
-                    <li class="flex items-center gap-4"><i class="fas fa-map-marker-alt text-orange-600"></i> Lucknow, Uttar Pradesh</li>
-                    <li class="flex items-center gap-4"><i class="fas fa-school text-orange-600"></i> Class 9 at St. Teresa's College</li>
-                    <li class="flex items-center gap-4"><i class="fas fa-robot text-red-600"></i> Science + AI &amp; Robotics</li>
-                </ul>
-            </div>
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <p class="section-label">02 — Education</p>
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-year">2024 — Present</div>
+        <div class="edu-title">Class 9 · High School</div>
+        <div class="edu-sub">
+          Currently pursuing secondary education with a strong focus on Mathematics,
+          Science, and Computer Science. Actively applying classroom concepts to
+          real-world coding projects outside school hours.
         </div>
-    </section>
-
-    <!-- EDUCATION & ACHIEVEMENTS -->
-    <section id="education" class="bg-gray-50 py-24">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="section-title text-5xl font-bold mb-12 text-center">Education &amp; Achievements</h2>
-            <div class="max-w-3xl mx-auto">
-                <div class="card bg-white p-12 rounded-3xl shadow-sm border border-orange-100">
-                    <div class="flex flex-col md:flex-row gap-8 items-center">
-                        <div>
-                            <div class="text-5xl font-bold text-orange-600">Class 9</div>
-                            <div class="text-xl text-gray-600 mt-2">St. Teresa's College, Lucknow</div>
-                        </div>
-                        <div class="flex-1 border-l border-orange-200 pl-8">
-                            <p class="text-lg font-medium">Science Stream with focus on <span class="text-red-600 font-semibold">AI &amp; Robotics</span></p>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-12 pt-10 border-t border-orange-100">
-                        <h4 class="font-semibold text-2xl mb-8 flex items-center gap-3"><span class="text-4xl">🏆</span> Achievements</h4>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="bg-orange-50 p-8 rounded-3xl">
-                                <div class="text-5xl mb-4">🥇</div>
-                                <p class="font-semibold text-xl">1st Position</p>
-                                <p class="text-gray-600 mt-2">AI / Robotics Competition</p>
-                            </div>
-                            <div class="bg-red-50 p-8 rounded-3xl">
-                                <div class="text-5xl mb-4">🥇</div>
-                                <p class="font-semibold text-xl">1st Position</p>
-                                <p class="text-gray-600 mt-2">AI / Robotics Technical Test</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <span class="edu-badge">Current</span>
+      </div>
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-year">2023 — 2024</div>
+        <div class="edu-title">Self-Taught Web Development</div>
+        <div class="edu-sub">
+          Completed structured self-study in HTML, CSS, and JavaScript through online
+          resources, documentation, and hands-on project building. Learned by doing —
+          the most effective method.
         </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="max-w-6xl mx-auto px-6 py-24">
-        <h2 class="section-title text-5xl font-bold mb-12 text-center">My Skills</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">HTML</div>
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">CSS</div>
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">Python</div>
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">Ai&Robotics</div>
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">Robotics</div>
-            <div class="skill-pill bg-white border-2 border-orange-200 text-center py-7 rounded-3xl font-medium text-xl">Git &amp; GitHub</div>
+        <span class="edu-badge">Self-Learning</span>
+      </div>
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-year">2022 — 2023</div>
+        <div class="edu-title">Class 8 · Middle School</div>
+        <div class="edu-sub">
+          Discovered a passion for computers and logic. First experiments with
+          basic programming concepts and problem-solving through coding challenges
+          and school computer lab sessions.
         </div>
-    </section>
+        <span class="edu-badge">Foundation</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="bg-gradient-to-b from-white to-orange-50 py-24">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="section-title text-5xl font-bold mb-4 text-center">My Projects</h2>
-            <p class="text-center text-gray-600 text-xl mb-16">Things I've built with passion</p>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- AI Chatbot -->
-                <div class="card bg-white rounded-3xl overflow-hidden border border-gray-100">
-                    <div class="h-60 bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                        <span class="text-8xl">🤖</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="font-semibold text-2xl">AI Chatbot</h3>
-                        <p class="text-gray-600 mt-3">Self-made intelligent chatbot using Python.</p>
-                        <div class="mt-8">
-                            <a href="https://github.com/DragonOjas/Chat_bot" target="_blank"
-                               class="block bg-gray-900 text-white text-center py-4 rounded-2xl font-medium hover:bg-black transition-all flex items-center justify-center gap-2">
-                                <i class="fab fa-github"></i> View on GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">03 — Skills</p>
+    <div class="skills-grid">
+      <div class="skill-card" style="--pct:85%">
+        <span class="skill-icon">🌐</span>
+        <div class="skill-name">HTML / CSS</div>
+        <div class="skill-desc">Crafting semantic, accessible markup and modern CSS layouts with Flexbox, Grid, and animations.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Advanced · 85%</div>
+      </div>
+      <div class="skill-card" style="--pct:72%">
+        <span class="skill-icon">⚡</span>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-desc">Building interactive experiences, DOM manipulation, event handling, and async logic.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Intermediate · 72%</div>
+      </div>
+      <div class="skill-card" style="--pct:65%">
+        <span class="skill-icon">🐍</span>
+        <div class="skill-name">Python</div>
+        <div class="skill-desc">Scripting, problem solving, basic automation, and exploring data with Python fundamentals.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Intermediate · 65%</div>
+      </div>
+      <div class="skill-card" style="--pct:60%">
+        <span class="skill-icon">🎨</span>
+        <div class="skill-name">UI Design</div>
+        <div class="skill-desc">Thinking in layouts, typography, and visual hierarchy to build interfaces that feel intentional.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Learning · 60%</div>
+      </div>
+      <div class="skill-card" style="--pct:55%">
+        <span class="skill-icon">🐙</span>
+        <div class="skill-name">Git & GitHub</div>
+        <div class="skill-desc">Version control, branching, and publishing projects with GitHub Pages for the world to see.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Learning · 55%</div>
+      </div>
+      <div class="skill-card" style="--pct:50%">
+        <span class="skill-icon">🧠</span>
+        <div class="skill-name">Problem Solving</div>
+        <div class="skill-desc">Breaking complex challenges into clear steps — the real skill behind every great developer.</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+        <div class="skill-lvl">Growing · 50%</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                <!-- Candle Showcase -->
-                <div class="card bg-white rounded-3xl overflow-hidden border border-gray-100">
-                    <div class="h-60 bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-                        <span class="text-8xl">🕯️</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="font-semibold text-2xl">Candle Showcase Website</h3>
-                        <p class="text-gray-600 mt-3">Beautiful responsive website with animations.</p>
-                        <div class="flex gap-3 mt-8">
-                            <a href="https://github.com/DragonOjas/Candles-shoecase-webstie" target="_blank"
-                               class="flex-1 bg-gray-900 text-white text-center py-4 rounded-2xl font-medium hover:bg-black transition-all flex items-center justify-center gap-2">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="https://dragonojas.github.io/Candles-shoecase-webstie/" target="_blank"
-                               class="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-center py-4 rounded-2xl font-medium hover:brightness-110 transition-all">
-                                Live Demo →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Friend's Portfolio -->
-                <div class="card bg-white rounded-3xl overflow-hidden border border-gray-100">
-                    <div class="h-60 bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center">
-                        <span class="text-8xl">👥</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="font-semibold text-2xl">Friend's Portfolio</h3>
-                        <p class="text-gray-600 mt-3">Designed and coded a personal portfolio for my friend.</p>
-                        <div class="flex gap-3 mt-8">
-                            <a href="https://github.com/DragonOjas/Portfolio" target="_blank"
-                               class="flex-1 bg-gray-900 text-white text-center py-4 rounded-2xl font-medium hover:bg-black transition-all flex items-center justify-center gap-2">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="https://portfolio-tau-lime-11.vercel.app" target="_blank"
-                               class="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-center py-4 rounded-2xl font-medium hover:brightness-110 transition-all">
-                                Live Demo →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Game in Development -->
-                <div class="card bg-white rounded-3xl overflow-hidden border border-gray-100 md:col-span-2 lg:col-span-1">
-                    <div class="h-60 bg-gradient-to-br from-red-500 via-orange-500 to-red-500 flex items-center justify-center">
-                        <span class="text-8xl">🎮</span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="font-semibold text-2xl">Game in Development</h3>
-                        <p class="text-gray-600 mt-3">Exciting game coming soon on CrazyGames!</p>
-                        <div class="mt-8">
-                            <a href="#" target="_blank"
-                               class="block bg-gray-900 text-white text-center py-4 rounded-2xl font-medium hover:bg-black transition-all flex items-center justify-center gap-2">
-                                <i class="fab fa-github"></i> GitHub Repository
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-16">
-                <a href="https://github.com/DragonOjas" target="_blank"
-                   class="inline-flex items-center gap-4 text-xl font-semibold bg-gray-900 text-white px-10 py-5 rounded-3xl hover:bg-black transition-all">
-                    <i class="fab fa-github text-3xl"></i>
-                    See All My Projects on GitHub
-                </a>
-            </div>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-label">04 — Projects</p>
+    <div class="projects-grid">
+      <div class="project-card featured">
+        <div class="project-num">001 — Featured</div>
+        <div class="project-title">This Portfolio</div>
+        <div class="project-desc">
+          A fully hand-coded portfolio with a 3D WebGL canvas background, custom cursor,
+          scroll-triggered animations, and a cinematic monochrome aesthetic. Every pixel
+          written from scratch in pure HTML, CSS, and JavaScript — no frameworks, no shortcuts.
         </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="py-24 bg-white">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="bg-gradient-to-r from-red-600 to-orange-500 text-white rounded-3xl py-20 px-12">
-                <h2 class="text-5xl font-bold mb-6">Let's Connect!</h2>
-                <p class="text-2xl text-white/90 mb-12">Excited to talk about AI, Robotics, or any coding ideas.</p>
-                
-                <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                    <a href="https://x.com/" target="_blank" class="flex items-center justify-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl text-xl font-semibold hover:shadow-2xl transition-all">
-                        <i class="fab fa-x-twitter"></i> Follow on X
-                    </a>
-                    <a href="https://discord.com/" target="_blank" class="flex items-center justify-center gap-3 bg-white text-orange-600 px-10 py-5 rounded-2xl text-xl font-semibold hover:shadow-2xl transition-all">
-                        <i class="fab fa-discord"></i> Join on Discord
-                    </a>
-                </div>
-            </div>
+        <div class="project-tags">
+          <span class="p-tag">HTML</span>
+          <span class="p-tag">CSS</span>
+          <span class="p-tag">JavaScript</span>
+          <span class="p-tag">WebGL</span>
+          <span class="p-tag">GitHub Pages</span>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 text-white py-10">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <p class="text-gray-400">© 2026 Ojas • Class 9 • St. Teresa's College, Lucknow</p>
+        <a href="#" class="project-link">View Live</a>
+      </div>
+      <div class="project-card">
+        <div class="project-num">002</div>
+        <div class="project-title">Add Your Project Here</div>
+        <div class="project-desc">
+          This is where your next project goes. Replace this placeholder with something
+          you built — a calculator, a quiz app, a weather app. Anything counts. Every
+          great developer started with small projects.
         </div>
-    </footer>
+        <div class="project-tags">
+          <span class="p-tag">HTML</span>
+          <span class="p-tag">CSS</span>
+          <span class="p-tag">JS</span>
+        </div>
+        <a href="#" class="project-link">View Project</a>
+      </div>
+      <div class="project-card">
+        <div class="project-num">003</div>
+        <div class="project-title">And Another One</div>
+        <div class="project-desc">
+          Keep building. This card is a reminder that the best portfolio is a
+          growing portfolio. Ship something new, add it here, and watch your
+          story unfold project by project.
+        </div>
+        <div class="project-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">Scripting</span>
+        </div>
+        <a href="#" class="project-link">View Project</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // Smooth scrolling for all internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="contact-pre">05 — Say Hello</p>
+    <div class="contact-headline">LET'S<br>CONNECT.</div>
+    <p class="contact-sub">
+      Whether you want to collaborate, give feedback, or just say hi —
+      I'm always open to a conversation. I'm young, learning, and always
+      excited to meet people who love creating.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="btn">Email Me</a>
+      <a href="https://github.com/yourusername" class="btn ghost" target="_blank">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 — All rights reserved</span>
+  <span class="footer-brand">YC</span>
+  <span class="footer-copy">Built with pure HTML · CSS · JS</span>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────
+   3D CANVAS — Floating wireframe geometry
+───────────────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('canvas3d');
+  const ctx = canvas.getContext('2d');
+  let W, H, cx, cy;
+  let mouse = {x:0,y:0};
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cx = W/2; cy = H/2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e=>{
+    mouse.x = (e.clientX - cx) / cx;
+    mouse.y = (e.clientY - cy) / cy;
+  });
+
+  /* Build 3D points */
+  function project(x,y,z,fov,tx,ty){
+    const scale = fov/(fov+z);
+    return {x: x*scale+tx, y: y*scale+ty, s: scale};
+  }
+
+  /* Particle field */
+  const PARTICLES = [];
+  for(let i=0;i<120;i++){
+    PARTICLES.push({
+      x:(Math.random()-0.5)*900,
+      y:(Math.random()-0.5)*700,
+      z:Math.random()*600-300,
+      r:Math.random()*1.2+0.3,
+      vz: 0.3+Math.random()*0.5,
+    });
+  }
+
+  /* Wireframe shapes: icosahedron vertices & edges */
+  const PHI = (1+Math.sqrt(5))/2;
+  const VERTS_BASE = [
+    [-1,PHI,0],[1,PHI,0],[-1,-PHI,0],[1,-PHI,0],
+    [0,-1,PHI],[0,1,PHI],[0,-1,-PHI],[0,1,-PHI],
+    [PHI,0,-1],[PHI,0,1],[-PHI,0,-1],[-PHI,0,1]
+  ];
+  const EDGES_BASE = [
+    [0,1],[0,5],[0,7],[0,10],[0,11],
+    [1,5],[1,7],[1,8],[1,9],
+    [2,3],[2,4],[2,6],[2,10],[2,11],
+    [3,4],[3,6],[3,8],[3,9],
+    [4,5],[4,9],[4,11],
+    [5,9],[5,11],
+    [6,7],[6,8],[6,10],
+    [7,8],[7,10],
+    [8,9],[10,11]
+  ];
+  const scale3 = 110;
+  const VERTS = VERTS_BASE.map(v=>({x:v[0]*scale3,y:v[1]*scale3,z:v[2]*scale3}));
+
+  /* Cube wireframe */
+  const C = 80;
+  const CUBE_V = [
+    {x:-C,y:-C,z:-C},{x:C,y:-C,z:-C},{x:C,y:C,z:-C},{x:-C,y:C,z:-C},
+    {x:-C,y:-C,z:C},{x:C,y:-C,z:C},{x:C,y:C,z:C},{x:-C,y:C,z:C}
+  ];
+  const CUBE_E = [
+    [0,1],[1,2],[2,3],[3,0],
+    [4,5],[5,6],[6,7],[7,4],
+    [0,4],[1,5],[2,6],[3,7]
+  ];
+
+  let t = 0;
+
+  function rotX(v,a){
+    return {x:v.x, y:v.y*Math.cos(a)-v.z*Math.sin(a), z:v.y*Math.sin(a)+v.z*Math.cos(a)};
+  }
+  function rotY(v,a){
+    return {x:v.x*Math.cos(a)+v.z*Math.sin(a), y:v.y, z:-v.x*Math.sin(a)+v.z*Math.cos(a)};
+  }
+  function rotZ(v,a){
+    return {x:v.x*Math.cos(a)-v.y*Math.sin(a), y:v.x*Math.sin(a)+v.y*Math.cos(a), z:v.z};
+  }
+
+  function drawWire(verts, edges, cx, cy, fov, rx, ry, rz, alpha){
+    const rv = verts.map(v=>{
+      let r = rotX(v, rx);
+      r = rotY(r, ry);
+      r = rotZ(r, rz);
+      return r;
+    });
+    const pv = rv.map(v=> project(v.x, v.y, v.z, fov, cx, cy));
+    ctx.strokeStyle = `rgba(240,237,232,${alpha})`;
+    ctx.lineWidth = 0.7;
+    edges.forEach(([a,b])=>{
+      const pa = pv[a], pb = pv[b];
+      if(!pa||!pb) return;
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.stroke();
+    });
+  }
+
+  function drawGrid(){
+    const scrollY = window.scrollY;
+    const speed = 0.0006;
+    const offset = (scrollY*speed + t*0.1) % 1;
+    const cols = 16, rows = 10;
+    const gW = W/cols, gH = H/rows;
+    ctx.strokeStyle = 'rgba(240,237,232,0.04)';
+    ctx.lineWidth = 1;
+    for(let i=0;i<=cols;i++){
+      ctx.beginPath();
+      ctx.moveTo(i*gW,0);ctx.lineTo(i*gW,H);ctx.stroke();
+    }
+    for(let j=0;j<=rows;j++){
+      ctx.beginPath();
+      ctx.moveTo(0,j*gH);ctx.lineTo(W,j*gH);ctx.stroke();
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t += 0.008;
+    const mx = mouse.x * 0.18;
+    const my = mouse.y * 0.12;
+
+    drawGrid();
+
+    /* Particles */
+    PARTICLES.forEach(p=>{
+      p.z -= p.vz;
+      if(p.z < -300) p.z = 300;
+      const pr = project(p.x, p.y, p.z, 800, cx, cy);
+      ctx.beginPath();
+      ctx.arc(pr.x, pr.y, p.r * pr.s * 2, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(240,237,232,${0.08+pr.s*0.25})`;
+      ctx.fill();
+    });
+
+    /* Icosahedron — left-center */
+    const rx1 = t*0.22 + my;
+    const ry1 = t*0.31 + mx;
+    drawWire(VERTS, EDGES_BASE, cx*0.45, cy*0.9, 600, rx1, ry1, t*0.08, 0.18);
+
+    /* Cube — right */
+    const rx2 = t*0.18 - my*0.5;
+    const ry2 = t*0.25 + mx*0.5;
+    drawWire(CUBE_V, CUBE_E, cx*1.65, cy*1.25, 550, rx2, ry2, t*0.05, 0.14);
+
+    /* Second smaller icosahedron — top right */
+    const VERTS2 = VERTS_BASE.map(v=>({x:v[0]*55,y:v[1]*55,z:v[2]*55}));
+    drawWire(VERTS2, EDGES_BASE, cx*1.78, cy*0.4, 600, t*0.4+my, t*0.3-mx, 0, 0.1);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─────────────────────────────────────────────
+   CUSTOM CURSOR
+───────────────────────────────────────────── */
+(function(){
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY});
+  function tick(){
+    rx += (mx-rx)*0.14;
+    ry += (my-ry)*0.14;
+    cur.style.left = mx+'px';
+    cur.style.top = my+'px';
+    ring.style.left = rx+'px';
+    ring.style.top = ry+'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+  document.querySelectorAll('a,button,.btn,.skill-card,.project-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      cur.style.width='20px';cur.style.height='20px';
+      ring.style.width='60px';ring.style.height='60px';
+      ring.style.borderColor='rgba(240,237,232,.8)';
+    });
+    el.addEventListener('mouseleave',()=>{
+      cur.style.width='10px';cur.style.height='10px';
+      ring.style.width='38px';ring.style.height='38px';
+      ring.style.borderColor='rgba(240,237,232,.5)';
+    });
+  });
+})();
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL — IntersectionObserver
+───────────────────────────────────────────── */
+(function(){
+  const targets = document.querySelectorAll('.edu-item,.skill-card,.project-card');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('visible'), i*80);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12});
+  targets.forEach(el=>obs.observe(el));
+})();
+
+/* ─────────────────────────────────────────────
+   ACTIVE NAV highlight
+───────────────────────────────────────────── */
+(function(){
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.style.color='');
+        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if(a) a.style.color='var(--paper)';
+      }
+    });
+  },{threshold:0.4});
+  secs.forEach(s=>obs.observe(s));
+})();
+</script>
 </body>
-</html> 
+</html>
