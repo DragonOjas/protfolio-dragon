@@ -36,7 +36,7 @@ body {
   cursor: none;
 }
 
-/* ── CUSTOM CURSOR ─────────────────────────────── */
+/* CUSTOM CURSOR */
 #cursor {
   width: 12px; height: 12px;
   background: var(--blue);
@@ -60,7 +60,7 @@ body {
 body:has(a:hover) #cursor { background: var(--orange); box-shadow: var(--glow-orange); transform: scale(1.5); }
 body:has(a:hover) #cursor-trail { border-color: var(--orange); width:50px; height:50px; }
 
-/* ── LOADING SCREEN ────────────────────────────── */
+/* LOADING SCREEN */
 #loader {
   position: fixed; inset: 0;
   background: var(--black);
@@ -106,10 +106,10 @@ body:has(a:hover) #cursor-trail { border-color: var(--orange); width:50px; heigh
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 @keyframes pulse { from{filter:brightness(1)} to{filter:brightness(1.4)} }
 
-/* ── CANVAS PARTICLES ──────────────────────────── */
+/* CANVAS PARTICLES */
 #particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-/* ── SCANLINE OVERLAY ──────────────────────────── */
+/* SCANLINE OVERLAY */
 body::after {
   content:'';
   position:fixed; inset:0;
@@ -118,7 +118,7 @@ body::after {
   z-index: 99000;
 }
 
-/* ── NAV ───────────────────────────────────────── */
+/* NAV */
 nav {
   position: fixed; top:0; left:0; right:0;
   z-index: 1000;
@@ -172,7 +172,7 @@ nav.scrolled { padding: 0.8rem 4vw; background: rgba(2,4,8,0.92); }
 .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
 .hamburger span { width:24px; height:2px; background:var(--blue); border-radius:99px; transition:all 0.3s; }
 
-/* ── SECTION BASE ──────────────────────────────── */
+/* SECTION BASE */
 section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
 .section-tag {
   font-family: 'Share Tech Mono', monospace;
@@ -213,7 +213,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   50% { box-shadow: 0 0 20px rgba(0,255,157,0.5), 0 0 40px rgba(0,255,157,0.15); }
 }
 
-/* ── HERO ──────────────────────────────────────── */
+/* HERO */
 #hero {
   min-height: 100vh;
   display: flex; flex-direction: column;
@@ -294,6 +294,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
 }
 .hero-sub strong { color: var(--blue); }
+.hero-sub em { color: var(--orange); font-style: normal; }
 #typed-text {
   color: var(--orange);
   font-family: 'Share Tech Mono', monospace;
@@ -379,7 +380,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   to{opacity:1; transform:translateY(0)}
 }
 
-/* ── ABOUT ─────────────────────────────────────── */
+/* ABOUT */
 #about { background: linear-gradient(180deg, transparent, rgba(0,102,255,0.03) 50%, transparent); }
 .about-grid {
   display: grid;
@@ -416,11 +417,12 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   background: linear-gradient(135deg, var(--deep), rgba(0,102,255,0.2));
   display: flex; align-items: center; justify-content: center;
   font-family: 'Orbitron', monospace;
-  font-size: 5rem; font-weight: 900;
+  font-size: 3rem; font-weight: 900;
   color: var(--blue);
   text-shadow: var(--glow-blue);
   border: 1px solid rgba(0,212,255,0.2);
   overflow: hidden;
+  letter-spacing: 0.05em;
 }
 .avatar-inner::after {
   content:'';
@@ -470,7 +472,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
 .chip-red { border-color: rgba(255,34,68,0.4); color: var(--red); background: rgba(255,34,68,0.05); }
 .chip-green { border-color: rgba(0,255,157,0.4); color: var(--green); background: rgba(0,255,157,0.05); }
 
-/* ── SKILLS ────────────────────────────────────── */
+/* SKILLS */
 #skills { background: linear-gradient(180deg, transparent, rgba(255,34,68,0.02) 50%, transparent); }
 .skills-grid {
   display: grid;
@@ -497,9 +499,12 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
 .skill-card:hover { transform: translateY(-5px) rotateX(2deg); border-color: rgba(0,212,255,0.4); box-shadow: var(--glow-blue); }
 .skill-card:hover::before { opacity:1; }
 .skill-icon {
-  font-size: 2rem;
+  font-size: 1.4rem;
   margin-bottom: 0.8rem;
   display: block;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--blue);
+  letter-spacing: 0.1em;
 }
 .skill-name {
   font-family: 'Orbitron', monospace;
@@ -545,8 +550,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   opacity: 0.7;
 }
 
-/* ── EDUCATION ─────────────────────────────────── */
-#education {}
+/* EDUCATION */
 .edu-timeline { margin-top: 3rem; position:relative; }
 .edu-timeline::before {
   content:'';
@@ -590,7 +594,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   line-height: 1.5;
 }
 
-/* ── PROJECTS ──────────────────────────────────── */
+/* PROJECTS */
 #projects { background: linear-gradient(180deg, transparent, rgba(0,255,157,0.02) 50%, transparent); }
 .projects-grid {
   display: grid;
@@ -627,10 +631,14 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   width: 48px; height: 48px;
   border-radius: 8px;
   display:flex; align-items:center; justify-content:center;
-  font-size: 1.5rem;
+  font-size: 0.75rem;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  color: var(--blue);
   background: rgba(0,212,255,0.08);
   border: 1px solid rgba(0,212,255,0.15);
   flex-shrink:0;
+  letter-spacing: 0.05em;
 }
 .project-meta { flex:1; }
 .project-title {
@@ -682,8 +690,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   opacity: 0.6;
 }
 
-/* ── ACHIEVEMENTS ──────────────────────────────── */
-#achievements {}
+/* ACHIEVEMENTS */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -707,7 +714,14 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
 }
 .achievement-card:hover { transform:translateY(-4px); border-color: rgba(255,106,0,0.4); box-shadow: var(--glow-orange); }
 .achievement-card:hover::before { opacity:1; }
-.achievement-icon { font-size:2rem; margin-bottom:0.8rem; }
+.achievement-icon {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  color: var(--orange);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.8rem;
+  opacity: 0.6;
+}
 .achievement-title {
   font-family: 'Orbitron', monospace;
   font-size: 0.85rem; font-weight:700;
@@ -722,7 +736,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   opacity: 0.6;
 }
 
-/* ── CONTACT ───────────────────────────────────── */
+/* CONTACT */
 #contact {
   background: linear-gradient(180deg, transparent, rgba(255,34,68,0.03) 50%, transparent);
   text-align: center;
@@ -749,7 +763,14 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   display:block;
 }
 .contact-card:hover { transform:translateY(-5px); border-color: rgba(0,212,255,0.4); box-shadow: var(--glow-blue); }
-.cc-icon { font-size:1.8rem; margin-bottom:0.5rem; }
+.cc-icon {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--blue);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
 .cc-platform {
   font-family: 'Orbitron', monospace;
   font-size: 0.75rem; font-weight:700;
@@ -766,7 +787,7 @@ section { position:relative; z-index:1; padding: 7rem 6vw 5rem; }
   margin-top: 1rem;
 }
 
-/* ── FOOTER ────────────────────────────────────── */
+/* FOOTER */
 footer {
   position:relative; z-index:1;
   border-top: 1px solid rgba(0,212,255,0.1);
@@ -784,11 +805,11 @@ footer {
   text-shadow: var(--glow-blue);
 }
 
-/* ── REVEAL ANIMATIONS ─────────────────────────── */
+/* REVEAL ANIMATIONS */
 .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.7s, transform 0.7s; }
 .reveal.visible { opacity:1; transform:translateY(0); }
 
-/* ── MOBILE NAV ────────────────────────────────── */
+/* MOBILE NAV */
 @media(max-width:768px) {
   .nav-links { display:none; flex-direction:column; position:absolute; top:100%; left:0; right:0; background:rgba(2,4,8,0.96); padding:1rem 2rem; border-bottom:1px solid var(--glass-border); gap:1rem; }
   .nav-links.open { display:flex; }
@@ -834,26 +855,24 @@ footer {
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- HERO -->
-<!-- ═══════════════════════════════════════════════ -->
-<!-- Hand-coded with love and AI assistance - not fully AI generated -->
+<!-- Hand-coded with love and AI assistance — not fully AI generated -->
 <section id="hero">
   <div class="hero-grid-line"></div>
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">CLASS 9 • INDIA • FUTURE BUILDER</div>
+    <div class="hero-eyebrow">CLASS 9 &bull; INDIA &bull; FUTURE BUILDER</div>
     <h1 class="hero-name">
       <span class="line1">HELLO,</span>
       <span class="line2">I'M OJAS</span>
     </h1>
     <p class="hero-sub">
-      A <strong>vibe coder</strong> who codes with <em>AI and modern tools</em>,<br>
-      building futuristic web experiences & AI projects from scratch.
+      A <strong>vibe coder</strong> who builds with <em>AI and modern tools</em>,<br>
+      creating futuristic web experiences and AI projects from scratch.
     </p>
-    <span id="typed-text"><span class="typed-cursor">▋</span></span>
-    <div class="hero-vibe">✦ i'm a vibe code ✦ always vibing, always coding ✦</div>
+    <span id="typed-text"><span class="typed-cursor">&#9611;</span></span>
+    <div class="hero-vibe">// i'm a vibe code — always vibing, always coding //</div>
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="#contact" class="btn-outline">Get In Touch</a>
@@ -865,9 +884,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- ABOUT -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="about">
   <div class="section-tag">// 01. SYSTEM.INFO</div>
   <h2 class="section-title">About <span class="gradient-text">Me</span> <span class="vibe-badge">VIBE CODE</span></h2>
@@ -876,7 +893,7 @@ footer {
       <div class="about-avatar-wrap">
         <div class="avatar-ring"></div>
         <div class="avatar-ring2"></div>
-        <div class="avatar-inner">⚡</div>
+        <div class="avatar-inner">OJ</div>
         <div class="about-dots">
           <div class="about-dot"></div>
           <div class="about-dot"></div>
@@ -886,67 +903,65 @@ footer {
     </div>
     <div class="about-text reveal">
       <p>Hey! I'm <strong>Ojas</strong> — a <em>Class 9 student from India</em> who eats, sleeps, and breathes code. I'm not just a developer, I'm a <strong>vibe coder</strong> — I code with energy, passion, and a whole lot of style, using AI tools and modern development stacks.</p>
-      <p>At 14, I've already built <strong>AI projects</strong>, experimented with web technologies, and I'm on a mission to create digital experiences that hit different. My journey started with curiosity and turned into an obsession 🔥</p>
+      <p>At 14, I've already built <strong>AI projects</strong>, experimented with web technologies, and I'm on a mission to create digital experiences that hit different. My journey started with curiosity and turned into an obsession.</p>
       <p>When I'm not building stuff, I'm learning cutting-edge tech, exploring AI, and figuring out how to make the next big thing. I know how to use many tools — from VS Code and Git to AI assistants and cloud platforms. <em>The future is code, and I'm writing it.</em></p>
-      <p><strong>I'm a vibe code</strong> — every project I touch has energy, every line I write has soul. That's just how I roll. ✦</p>
+      <p><strong>I'm a vibe code</strong> — every project I touch has energy, every line I write has soul. That's just how I roll.</p>
       <div class="info-chips">
-        <span class="chip chip-blue">📍 India</span>
-        <span class="chip chip-orange">🎓 Class 9</span>
-        <span class="chip chip-green">⚡ AI Builder</span>
-        <span class="chip chip-red">🔥 Vibe Code</span>
-        <span class="chip chip-blue">💡 Creator</span>
-        <span class="chip chip-orange">🚀 Young Dev</span>
-        <span class="chip chip-green">🛠️ Tool Master</span>
-        <span class="chip chip-red">🤖 AI Assisted</span>
+        <span class="chip chip-blue">India</span>
+        <span class="chip chip-orange">Class 9</span>
+        <span class="chip chip-green">AI Builder</span>
+        <span class="chip chip-red">Vibe Code</span>
+        <span class="chip chip-blue">Creator</span>
+        <span class="chip chip-orange">Young Dev</span>
+        <span class="chip chip-green">Tool Master</span>
+        <span class="chip chip-red">AI Assisted</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- SKILLS -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="skills">
   <div class="section-tag">// 02. CAPABILITIES.EXE</div>
   <h2 class="section-title">My <span class="gradient-text">Skills</span> <span class="vibe-badge">VIBE CODE</span></h2>
   <div class="skills-grid" id="skills-grid">
     <div class="skill-card reveal" data-delay="0">
-      <span class="skill-icon">🐍</span>
+      <span class="skill-icon">PY</span>
       <div class="skill-name">PYTHON</div>
       <div class="skill-pct">85%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-blue" data-width="85"></div></div>
       <div class="skill-vibe">// vibe code in python daily</div>
     </div>
     <div class="skill-card reveal" data-delay="100">
-      <span class="skill-icon">🌐</span>
-      <div class="skill-name">HTML & CSS</div>
+      <span class="skill-icon">HTML</span>
+      <div class="skill-name">HTML &amp; CSS</div>
       <div class="skill-pct">80%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-orange" data-width="80"></div></div>
       <div class="skill-vibe">// styling the future, one line at a time</div>
     </div>
     <div class="skill-card reveal" data-delay="200">
-      <span class="skill-icon">⚡</span>
+      <span class="skill-icon">JS</span>
       <div class="skill-name">JAVASCRIPT</div>
       <div class="skill-pct">70%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-green" data-width="70"></div></div>
-      <div class="skill-vibe">// making the web interactive & alive</div>
+      <div class="skill-vibe">// making the web interactive and alive</div>
     </div>
     <div class="skill-card reveal" data-delay="300">
-      <span class="skill-icon">🤖</span>
+      <span class="skill-icon">AI</span>
       <div class="skill-name">AI / ML BASICS</div>
       <div class="skill-pct">65%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-blue" data-width="65"></div></div>
       <div class="skill-vibe">// already shipped an AI project fr</div>
     </div>
     <div class="skill-card reveal" data-delay="400">
-      <span class="skill-icon">💻</span>
+      <span class="skill-icon">PS</span>
       <div class="skill-name">PROBLEM SOLVING</div>
       <div class="skill-pct">88%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-orange" data-width="88"></div></div>
       <div class="skill-vibe">// breaking problems, building solutions</div>
     </div>
     <div class="skill-card reveal" data-delay="500">
-      <span class="skill-icon">🎨</span>
+      <span class="skill-icon">UX</span>
       <div class="skill-name">UI/UX DESIGN</div>
       <div class="skill-pct">72%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-green" data-width="72"></div></div>
@@ -955,50 +970,48 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- TOOLS -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="tools">
   <div class="section-tag">// 02.5. TOOLKIT.EXE</div>
   <h2 class="section-title">My <span class="gradient-text">Tools</span> <span class="vibe-badge">VIBE CODE</span></h2>
   <div class="skills-grid" id="tools-grid">
     <div class="skill-card reveal" data-delay="0">
-      <span class="skill-icon">💻</span>
+      <span class="skill-icon">VSC</span>
       <div class="skill-name">VS CODE</div>
       <div class="skill-pct">95%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-blue" data-width="95"></div></div>
       <div class="skill-vibe">// my coding home, extensions loaded</div>
     </div>
     <div class="skill-card reveal" data-delay="100">
-      <span class="skill-icon">🤖</span>
+      <span class="skill-icon">AI</span>
       <div class="skill-name">AI ASSISTANTS</div>
       <div class="skill-pct">90%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-green" data-width="90"></div></div>
       <div class="skill-vibe">// coding with AI is the future</div>
     </div>
     <div class="skill-card reveal" data-delay="200">
-      <span class="skill-icon">📚</span>
+      <span class="skill-icon">GIT</span>
       <div class="skill-name">GITHUB</div>
       <div class="skill-pct">85%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-orange" data-width="85"></div></div>
       <div class="skill-vibe">// version control is vibe code essential</div>
     </div>
     <div class="skill-card reveal" data-delay="300">
-      <span class="skill-icon">🐧</span>
+      <span class="skill-icon">LNX</span>
       <div class="skill-name">LINUX/TERMINAL</div>
       <div class="skill-pct">75%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-blue" data-width="75"></div></div>
       <div class="skill-vibe">// command line wizardry</div>
     </div>
     <div class="skill-card reveal" data-delay="400">
-      <span class="skill-icon">☁️</span>
+      <span class="skill-icon">CLD</span>
       <div class="skill-name">CLOUD PLATFORMS</div>
       <div class="skill-pct">70%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-green" data-width="70"></div></div>
       <div class="skill-vibe">// deploying to the cloud like a boss</div>
     </div>
     <div class="skill-card reveal" data-delay="500">
-      <span class="skill-icon">🎨</span>
+      <span class="skill-icon">DSN</span>
       <div class="skill-name">DESIGN TOOLS</div>
       <div class="skill-pct">65%</div>
       <div class="skill-bar-wrap"><div class="skill-bar bar-orange" data-width="65"></div></div>
@@ -1007,9 +1020,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- EDUCATION -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="education">
   <div class="section-tag">// 03. KNOWLEDGE.BASE</div>
   <h2 class="section-title"><span class="gradient-text">Education</span> <span class="vibe-badge">VIBE CODE</span></h2>
@@ -1017,33 +1028,31 @@ footer {
     <div class="edu-item">
       <div class="edu-dot"></div>
       <div class="edu-year">2024 — PRESENT</div>
-      <div class="edu-school">Class 9 Student 🏫</div>
+      <div class="edu-school">Class 9 Student</div>
       <div class="edu-degree">Currently in Class 9, India. Balancing academics with coding projects and AI experiments. Always a vibe code — learning in the classroom AND the terminal.</div>
     </div>
     <div class="edu-item">
       <div class="edu-dot"></div>
       <div class="edu-year">2023</div>
-      <div class="edu-school">Self-Taught Python Developer 🐍</div>
+      <div class="edu-school">Self-Taught Python Developer</div>
       <div class="edu-degree">Started my coding journey with Python at a young age. Built multiple projects, explored automation, and developed my first AI assistant. Total vibe code mode activated.</div>
     </div>
     <div class="edu-item">
       <div class="edu-dot"></div>
       <div class="edu-year">2022</div>
-      <div class="edu-school">Web Development Foundations 🌐</div>
+      <div class="edu-school">Web Development Foundations</div>
       <div class="edu-degree">Learned HTML, CSS, and JavaScript through online resources and pure curiosity. Made my first interactive websites and fell in love with the craft.</div>
     </div>
     <div class="edu-item">
       <div class="edu-dot"></div>
       <div class="edu-year">THE BEGINNING</div>
-      <div class="edu-school">First Hello World 💡</div>
+      <div class="edu-school">First Hello World</div>
       <div class="edu-degree">The day I printed "Hello World" was the day everything changed. Realized code is just vibing in a language machines understand. Been a vibe code ever since.</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- PROJECTS -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="projects">
   <div class="section-tag">// 04. BUILD.LOG</div>
   <h2 class="section-title">Featured <span class="gradient-text">Projects</span> <span class="vibe-badge">VIBE CODE</span></h2>
@@ -1051,10 +1060,10 @@ footer {
 
     <div class="project-card reveal">
       <div class="project-header">
-        <div class="project-icon">🤖</div>
+        <div class="project-icon">AI</div>
         <div class="project-meta">
-          <div class="project-title">AI ASSISTANT</div>
-          <span class="project-status status-live">● LIVE</span>
+          <div class="project-title">NATSUKI REN — AI BOT</div>
+          <span class="project-status status-live">&#9679; LIVE</span>
         </div>
       </div>
       <div class="project-body">
@@ -1066,8 +1075,8 @@ footer {
           <span class="tag">Vibe Code</span>
         </div>
         <div class="project-links">
-          <a href="#" class="proj-link">⚡ View Project</a>
-          <a href="#" class="proj-link">🔗 GitHub</a>
+          <a href="https://natsuki-ren-ai.onrender.com" target="_blank" class="proj-link">-- View Project</a>
+          <a href="https://github.com/dragonojas" target="_blank" class="proj-link">// GitHub</a>
         </div>
       </div>
       <div class="project-vibe">// i'm a vibe code — this project proves it</div>
@@ -1075,10 +1084,34 @@ footer {
 
     <div class="project-card reveal">
       <div class="project-header">
-        <div class="project-icon">🌐</div>
+        <div class="project-icon">HC</div>
+        <div class="project-meta">
+          <div class="project-title">HAND CRICKET</div>
+          <span class="project-status status-live">&#9679; LIVE</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">A browser-based Hand Cricket game built with pure JavaScript. Pick your number, beat the AI, and don't get out — classic desi playground energy, now running in your browser. Fully hand-coded, no frameworks.</p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Game Dev</span>
+        </div>
+        <div class="project-links">
+          <a href="https://dragonojas.github.io/Hand-cricket/" target="_blank" class="proj-link">-- Play Now</a>
+          <a href="https://github.com/dragonojas/Hand-cricket" target="_blank" class="proj-link">// GitHub</a>
+        </div>
+      </div>
+      <div class="project-vibe">// childhood game, coded from scratch — vibe code style</div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <div class="project-icon">WEB</div>
         <div class="project-meta">
           <div class="project-title">THIS PORTFOLIO</div>
-          <span class="project-status status-live">● LIVE</span>
+          <span class="project-status status-live">&#9679; LIVE</span>
         </div>
       </div>
       <div class="project-body">
@@ -1090,8 +1123,8 @@ footer {
           <span class="tag">Cyberpunk</span>
         </div>
         <div class="project-links">
-          <a href="#" class="proj-link">🚀 You're Here</a>
-          <a href="#" class="proj-link">🔗 GitHub</a>
+          <a href="#" class="proj-link">-- You're Here</a>
+          <a href="https://github.com/dragonojas" target="_blank" class="proj-link">// GitHub</a>
         </div>
       </div>
       <div class="project-vibe">// self-aware portfolio is peak vibe code</div>
@@ -1099,10 +1132,10 @@ footer {
 
     <div class="project-card reveal">
       <div class="project-header">
-        <div class="project-icon">🎮</div>
+        <div class="project-icon">PY</div>
         <div class="project-meta">
           <div class="project-title">PYTHON GAME ENGINE</div>
-          <span class="project-status status-wip">⟳ WIP</span>
+          <span class="project-status status-wip">&#10227; WIP</span>
         </div>
       </div>
       <div class="project-body">
@@ -1114,8 +1147,8 @@ footer {
           <span class="tag">Vibe Code</span>
         </div>
         <div class="project-links">
-          <a href="#" class="proj-link">⚡ In Progress</a>
-          <a href="#" class="proj-link">🔗 GitHub</a>
+          <a href="#" class="proj-link">-- In Progress</a>
+          <a href="https://github.com/dragonojas" target="_blank" class="proj-link">// GitHub</a>
         </div>
       </div>
       <div class="project-vibe">// building reality from scratch, vibe code style</div>
@@ -1123,34 +1156,10 @@ footer {
 
     <div class="project-card reveal">
       <div class="project-header">
-        <div class="project-icon">📊</div>
-        <div class="project-meta">
-          <div class="project-title">DATA ANALYZER</div>
-          <span class="project-status status-live">● LIVE</span>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">A Python-based data analysis tool that takes raw CSVs and spits out beautiful visualizations, stats, and insights. Making data feel alive is just... vibe code.</p>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Pandas</span>
-          <span class="tag">Matplotlib</span>
-          <span class="tag">Data</span>
-        </div>
-        <div class="project-links">
-          <a href="#" class="proj-link">⚡ View Project</a>
-          <a href="#" class="proj-link">🔗 GitHub</a>
-        </div>
-      </div>
-      <div class="project-vibe">// turning numbers into stories, vibe code style</div>
-    </div>
-
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">🔐</div>
+        <div class="project-icon">SEC</div>
         <div class="project-meta">
           <div class="project-title">ENCRYPTION TOOL</div>
-          <span class="project-status status-live">● LIVE</span>
+          <span class="project-status status-live">&#9679; LIVE</span>
         </div>
       </div>
       <div class="project-body">
@@ -1162,8 +1171,8 @@ footer {
           <span class="tag">Security</span>
         </div>
         <div class="project-links">
-          <a href="#" class="proj-link">⚡ View Project</a>
-          <a href="#" class="proj-link">🔗 GitHub</a>
+          <a href="#" class="proj-link">-- View Project</a>
+          <a href="https://github.com/dragonojas" target="_blank" class="proj-link">// GitHub</a>
         </div>
       </div>
       <div class="project-vibe">// secrets look cooler when you're vibe code</div>
@@ -1171,14 +1180,14 @@ footer {
 
     <div class="project-card reveal">
       <div class="project-header">
-        <div class="project-icon">🌟</div>
+        <div class="project-icon">???</div>
         <div class="project-meta">
           <div class="project-title">COMING SOON...</div>
-          <span class="project-status status-wip">⟳ COOKING</span>
+          <span class="project-status status-wip">&#10227; COOKING</span>
         </div>
       </div>
       <div class="project-body">
-        <p class="project-desc">Something big is in the works. Can't reveal yet, but it involves AI, web tech, and a whole lot of vibe. Stay tuned — it's gonna be fire 🔥</p>
+        <p class="project-desc">Something big is in the works. Can't reveal yet, but it involves AI, web tech, and a whole lot of vibe. Stay tuned — it's gonna be fire.</p>
         <div class="project-tags">
           <span class="tag">???</span>
           <span class="tag">AI</span>
@@ -1186,7 +1195,7 @@ footer {
           <span class="tag">Vibe Code</span>
         </div>
         <div class="project-links">
-          <a href="#" class="proj-link">🔒 Classified</a>
+          <a href="#" class="proj-link">-- Classified</a>
         </div>
       </div>
       <div class="project-vibe">// the biggest vibe code moment is loading...</div>
@@ -1195,51 +1204,49 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- ACHIEVEMENTS -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="achievements">
   <div class="section-tag">// 05. UNLOCKED.BADGES</div>
   <h2 class="section-title">My <span class="gradient-text">Achievements</span> <span class="vibe-badge">VIBE CODE</span></h2>
   <div class="achievements-grid">
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">🤖</div>
+      <div class="achievement-icon">[ AI ]</div>
       <div class="achievement-title">SHIPPED AN AI PROJECT</div>
       <div class="achievement-desc">Built and deployed a functional AI assistant at Class 9. Not a tutorial follow-along — an actual original project. Vibe code certified.</div>
       <div class="achievement-vibe">// i'm a vibe code — proof attached</div>
     </div>
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">🔥</div>
+      <div class="achievement-icon">[ SELF ]</div>
       <div class="achievement-title">SELF-TAUGHT DEVELOPER</div>
       <div class="achievement-desc">No formal CS classes, no bootcamp. Just pure curiosity, YouTube, docs, and late-night coding sessions. Built everything from scratch. That's the vibe code way.</div>
       <div class="achievement-vibe">// learned to code before most people learn algebra</div>
     </div>
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">🌐</div>
+      <div class="achievement-icon">[ FS ]</div>
       <div class="achievement-title">FULL-STACK CAPABLE</div>
       <div class="achievement-desc">At 14, already comfortable with both Python (backend) and HTML/CSS/JS (frontend). Building end-to-end solutions is just Tuesday for a vibe coder.</div>
       <div class="achievement-vibe">// full stack at 14 is peak vibe code energy</div>
     </div>
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">🏆</div>
+      <div class="achievement-icon">[ WIN ]</div>
       <div class="achievement-title">YOUNG CREATOR AWARD</div>
       <div class="achievement-desc">Recognized for exceptional creativity and technical skills at a young age. Being the youngest developer in many rooms and still the most vibe code person there.</div>
       <div class="achievement-vibe">// age is just a number when you're vibe code</div>
     </div>
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">💻</div>
+      <div class="achievement-icon">[ GIT ]</div>
       <div class="achievement-title">GITHUB STREAK</div>
       <div class="achievement-desc">Consistent contributions to open-source and personal projects. Green squares all day, every day. A true vibe code never stops shipping.</div>
       <div class="achievement-vibe">// commit early, commit often, stay vibe code</div>
     </div>
 
     <div class="achievement-card reveal">
-      <div class="achievement-icon">🚀</div>
+      <div class="achievement-icon">[ 5+ ]</div>
       <div class="achievement-title">MULTI-PROJECT BUILDER</div>
       <div class="achievement-desc">5+ completed projects across different domains — AI, web, games, data, security. Proves that being a vibe code means shipping in every direction at once.</div>
       <div class="achievement-vibe">// jack of all trades, master of vibe code</div>
@@ -1248,59 +1255,54 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ -->
 <!-- CONTACT -->
-<!-- ═══════════════════════════════════════════════ -->
 <section id="contact">
   <div class="section-tag">// 06. ESTABLISH.CONNECTION</div>
   <div class="contact-inner">
     <h2 class="section-title">Let's <span class="gradient-text">Connect</span> <span class="vibe-badge">VIBE CODE</span></h2>
-    <p class="contact-sub reveal">Got a cool project idea? Want to collaborate? Or just want to say hi to a fellow vibe coder? I'm always down to connect with creators, developers, and dreamers. Drop me a line!</p>
+    <p class="contact-sub reveal">Got a cool project idea? Want to collaborate? Or just want to say hi to a fellow vibe coder? I'm always down to connect with creators, developers, and dreamers. Drop me a line.</p>
     <div class="contact-cards reveal">
       <a href="mailto:ojas@email.com" class="contact-card">
-        <div class="cc-icon">📧</div>
+        <div class="cc-icon">[ MAIL ]</div>
         <div class="cc-platform">EMAIL</div>
         <div class="cc-handle">ojas@email.com</div>
       </a>
-      <a href="https://github.com" target="_blank" class="contact-card">
-        <div class="cc-icon">🐙</div>
+      <a href="https://github.com/dragonojas" target="_blank" class="contact-card">
+        <div class="cc-icon">[ GIT ]</div>
         <div class="cc-platform">GITHUB</div>
-        <div class="cc-handle">@ojas</div>
+        <div class="cc-handle">@dragonojas</div>
       </a>
       <a href="https://twitter.com" target="_blank" class="contact-card">
-        <div class="cc-icon">🐦</div>
+        <div class="cc-icon">[ X ]</div>
         <div class="cc-platform">TWITTER/X</div>
         <div class="cc-handle">@ojas_codes</div>
       </a>
       <a href="https://linkedin.com" target="_blank" class="contact-card">
-        <div class="cc-icon">💼</div>
+        <div class="cc-icon">[ LI ]</div>
         <div class="cc-platform">LINKEDIN</div>
         <div class="cc-handle">ojas-dev</div>
       </a>
     </div>
-    <div class="contact-vibe reveal">✦ &nbsp; i'm a vibe code — always online, always building &nbsp; ✦</div>
+    <div class="contact-vibe reveal">// i'm a vibe code — always online, always building //</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <a href="#hero" class="footer-logo">OJAS.EXE</a>
-  <span>// DESIGNED & CODED BY OJAS — I'M A VIBE CODE</span>
-  <span>INDIA © 2025</span>
+  <span>// DESIGNED &amp; CODED BY OJAS — I'M A VIBE CODE</span>
+  <span>INDIA &copy; 2025</span>
 </footer>
 
-<!-- ══════════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT -->
-<!-- ══════════════════════════════════════════════════════ -->
 <script>
-// ── LOADER ────────────────────────────────────────
+// LOADER
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loader').classList.add('hide');
   }, 2400);
 });
 
-// ── CURSOR ────────────────────────────────────────
+// CURSOR
 const cursor = document.getElementById('cursor');
 const trail = document.getElementById('cursor-trail');
 let mx=0, my=0, tx=0, ty=0;
@@ -1315,7 +1317,7 @@ document.addEventListener('mousemove', e => {
   requestAnimationFrame(animTrail);
 })();
 
-// ── PARTICLES ────────────────────────────────────
+// PARTICLES
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H, pts = [];
@@ -1342,7 +1344,6 @@ function drawParticles(){
     ctx.fillStyle = p.c + p.a + ')';
     ctx.fill();
   });
-  // connect nearby
   for(let i=0;i<pts.length;i++){
     for(let j=i+1;j<pts.length;j++){
       const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
@@ -1361,16 +1362,16 @@ function drawParticles(){
 }
 drawParticles();
 
-// ── TYPED TEXT ────────────────────────────────────
+// TYPED TEXT
 const phrases = [
   "// Building AI from scratch at 14...",
   "// Turning ideas into code daily...",
   "// Futuristic web experiences loading...",
   "// I'm a vibe code — always vibing...",
-  "// Class 9 student & full-stack dev...",
-  "// Python? HTML? JS? Yes. All of it.",
+  "// Class 9 student and full-stack dev...",
+  "// Python, HTML, JS — yes, all of it.",
   "// Making the future, one commit at a time...",
-  "// Coding with AI tools & modern stacks...",
+  "// Coding with AI tools and modern stacks...",
   "// Hand-coded portfolio, not AI generated..."
 ];
 let pi=0, ci=0, del=false, wait=0;
@@ -1380,28 +1381,28 @@ function typeLoop(){
   const phrase = phrases[pi];
   if(!del){
     ci++;
-    typedEl.innerHTML = phrase.slice(0,ci) + '<span class="typed-cursor">▋</span>';
+    typedEl.innerHTML = phrase.slice(0,ci) + '<span class="typed-cursor">&#9611;</span>';
     if(ci===phrase.length){ del=true; wait=60; }
     setTimeout(typeLoop, 55);
   } else {
     ci--;
-    typedEl.innerHTML = phrase.slice(0,ci) + '<span class="typed-cursor">▋</span>';
+    typedEl.innerHTML = phrase.slice(0,ci) + '<span class="typed-cursor">&#9611;</span>';
     if(ci===0){ del=false; pi=(pi+1)%phrases.length; wait=10; }
     setTimeout(typeLoop, 28);
   }
 }
 setTimeout(typeLoop, 2800);
 
-// ── NAV SCROLL ────────────────────────────────────
+// NAV SCROLL
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// ── REVEAL ON SCROLL ──────────────────────────────
+// REVEAL ON SCROLL
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
+  entries.forEach((e) => {
     if(e.isIntersecting){
       const delay = e.target.dataset.delay || 0;
       setTimeout(() => e.target.classList.add('visible'), +delay);
@@ -1411,7 +1412,7 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 reveals.forEach(r => io.observe(r));
 
-// ── SKILL BARS ────────────────────────────────────
+// SKILL BARS
 const bars = document.querySelectorAll('.skill-bar');
 const barIO = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1425,7 +1426,7 @@ const barIO = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 bars.forEach(b => barIO.observe(b));
 
-// ── EDU TIMELINE REVEAL ───────────────────────────
+// EDU TIMELINE REVEAL
 const eduItems = document.querySelectorAll('.edu-item');
 const eduIO = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
@@ -1437,7 +1438,7 @@ const eduIO = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 eduItems.forEach(item => eduIO.observe(item));
 
-// ── 3D CARD TILT ─────────────────────────────────
+// 3D CARD TILT
 document.querySelectorAll('.project-card, .skill-card, .achievement-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
@@ -1450,7 +1451,7 @@ document.querySelectorAll('.project-card, .skill-card, .achievement-card').forEa
   });
 });
 
-// ── SMOOTH SCROLL NAV ─────────────────────────────
+// SMOOTH SCROLL NAV
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const target = document.querySelector(a.getAttribute('href'));
